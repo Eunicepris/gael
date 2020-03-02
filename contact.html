@@ -1,0 +1,174 @@
+{% extends 'bases/base_home.html' %}
+
+{% block content %}
+
+<div id="app">
+    <section class="contact-titles">
+        <h1>CONTACTEZ-NOUS</h1>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+        <div class="">
+            <h6 class="text-center our-contacts">OUR CONTACTS</h6>
+            <h2 class="text-center helps">We’re Here to Help You</h2>
+            <p class="text-center paragraphe">
+            Got a project in mind? We’d love to hear about it. Take five minutes to get in touch with us or
+            </p>
+            <p class="text-center paragraphe">
+            send us a message using the form below so that we can get to know you. 
+            </p>
+        </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <img src="/static/images/p.svg" class="img-sizes">
+            <h5 class="visit">Visit Us Daily</h5>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <img src="/static/images/phones.svg" class="img-sizes">
+            <h5 class="visit">Visit Us Daily</h5>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <img src="/static/images/email.svg" class="img-sizes">
+            <h5 class="visit">Visit Us Daily</h5>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            <h6 class="visit-one">96534 Maféré Aboisso</h6>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <section class="dimension" id="app">
+        <div class="container">
+        <div class="row">
+        
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11316.465091380975!2d-0.5826843!3d44.8395654!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x22d69857a919758d!2sAssoencore!5e0!3m2!1sfr!2sci!4v1580308604788!5m2!1sfr!2sci" width="100%" height="520" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+        
+            <div class="contact-form" id="contact">
+                <h5 class="our-contacts">LET’S GET IN TOUCH</h5>
+                <h2 class="messages">Send Us a Message</h2>
+                <div v-if="isSuccess" style="padding: 2.75rem 1.25rem" class="alert alert-success" role="alert">
+                    ${ text }
+                </div>
+                <div v-if="error" style="padding: 2.75rem 1.25rem" class="alert alert-danger" role="alert">
+                    ${ text }
+                </div>
+                <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="" novalidate="novalidate">
+                <div class="form-wrap has-error">
+                    <input class="form-input form-control-has-validation" id="contact-2-name" type="text" v-model="nom"  name="nom" data-constraints="@Required" placeholder="Name">
+                    <br>
+
+                </div>
+                <div class="form-wrap">
+                    <input class="form-input form-control-has-validation" id="contact-2-email" type="email" v-model="email"  name="email" data-constraints="@Required @Email" placeholder="Email"><span class="form-validation"></span>
+                    <br>
+                </div>
+                <div class="form-wrap">
+                
+                    <textarea class="form-input" id="contact-2-message" v-model="message" name="message" placeholder="Message"></textarea>
+                </div>
+                <br>
+                <button class="button button-primary" v-on:click.prevent="sendmessage"  v-if="!isenvoye" type="submit">Submit now</button>
+
+                    <div v-if="loader" class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}
+
+{% block vue %}
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            base_url: window.location.protocol + "//" + window.location.host,
+            email: '',
+            nom: '',
+            message: '',
+            text:'',
+            isenvoye: false,
+            loader: false,
+            isSuccess: false,
+            error: false,
+        },
+        delimiters: ["${", "}"],
+        mounted() {
+
+        },
+        methods: {
+            sendmessage: function () {
+                this.loader = true
+                this.isenvoye = true
+                axios.defaults.xsrfCookieName = 'csrftoken'
+                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                let formData = new FormData();
+                formData.append('nom', '' + this.nom);
+                formData.append('email', '' + this.email);
+                formData.append('message', '' + this.message);
+                console.log(this.nom)
+                console.log(this.email)
+                console.log(this.message)
+
+            axios.post(this.base_url + '/contact', formData,
+                    {
+
+                    }).then(response =>  {
+                    if (response.data.succes == true) {
+                            this.success = true
+                            this.isSuccess = true
+                            this.error = false
+                            this.loader = false
+                            this.isenvoye = false
+                            this.text = response.data.text
+                        this.nom = ''
+                        this.message = ''
+                        this.email = ''
+                    }else{
+                        this.loader = false
+                        this.isenvoye = false
+                        this.error = true
+                        this.text = response.data.text
+                        this.isSuccess = false
+                        this.success = false
+                    }
+
+                })
+                    .catch((err) => {
+                        console.log(err);
+                        this.isregister = false;
+                    })
+            },
+
+        }
+    })
+
+</script>
+{% endblock vue %}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>assoencore</title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/counter.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <script>
+            window.addEventListener("load", function () {
+                const loader = document.querySelector(".loader");
+                loader.className += " hidden"; // class "loader hidden"
+            });
+    </script>
+
+
+    <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        .lds-ellipsis {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        .lds-ellipsis div {
+            position: absolute;
+            top: 33px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #cef;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+        .lds-ellipsis div:nth-child(1) {
+            left: 8px;
+            animation: lds-ellipsis1 0.6s infinite;
+        }
+        .lds-ellipsis div:nth-child(2) {
+        left: 8px;
+        animation: lds-ellipsis2 0.6s infinite;
+        }
+        .lds-ellipsis div:nth-child(3) {
+        left: 32px;
+        animation: lds-ellipsis2 0.6s infinite;
+        }
+        .lds-ellipsis div:nth-child(4) {
+        left: 56px;
+        animation: lds-ellipsis3 0.6s infinite;
+        }
+        @keyframes lds-ellipsis1 {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+        }
+        @keyframes lds-ellipsis3 {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+        }
+        @keyframes lds-ellipsis2 {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(24px, 0);
+        }
+        }
+    </style>
+    <style>
+        /* loader css start */
+        .loader {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader > img {
+            width: 100px;
+        }
+
+        .loader.hidden {
+            animation: fadeOut 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .thumb {
+            height: 100px;
+            border: 1px solid black;
+            margin: 10px;
+        }
+        /* loader css end */
+    </style>
+</head>
+<body>
+<!--head of nav -->
+    <nav class="navbar navbar-expand-lg navigation-bar sticky-top">
+        <a href="#"><img src="/static/images/logo-assoencore.png" class="img-fluid web-site-logo" alt=""></a>
+        <div class="navbtn navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="burger"></div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav navigation-list">
+                <li class="nav-item navigation-list-items active"><a class="nav-link navigation-link" href="{% url 'home'  %}">Accueil</a></li>
+                <li class="nav-item navigation-list-items"><a class="nav-link navigation-link" href="{% url 'about'  %}">A propos</a></li>
+                <li class="nav-item navigation-list-items dropdown">
+                <a class="nav-link navigation-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Nos projets
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item dropdown-link" href="{% url 'projet'  %}">La nuit du costume africain</a>
+                    <a class="dropdown-item dropdown-link" href="{% url 'coeur'  %}">Coeur de boucles</a>
+                    <a class="dropdown-item dropdown-link" href="https://kanianmagazine.com/">Kanian Magazine</a>
+                    <a class="dropdown-item dropdown-link" href="{% url 'trophee'  %}">Les trophées Kanian</a>
+                    <a class="dropdown-item dropdown-link" href="{% url 'journee' %}">Journée des femmes</a>
+                    
+                </div>
+                </li>
+                <li class="nav-item navigation-list-items"><a class="nav-link navigation-link" href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+<!-- End of nav -->
+    
+{% block content %}
+{% endblock content %}
+
+
+
+<footer class="section footer bg-gray-900">
+        <div class="container">
+        <div class="footer-main">
+            <div class="row row-50 justify-content-between">
+            <div class="col-xl-5 col-md-6">
+                <div class="row">
+                <div class="col-md-5 col-6">
+                    <ul class="footer-nav-list">
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="about-us.html">About us</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="services.html">Our services</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="{% url 'projet' %}">Team</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="blog.html">News</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="{% url 'contact' %}">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-6 mx-auto">
+                    <ul class="footer-nav-list">
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Financial Planning</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Investment Planning Lead</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Generation</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Email Marketing</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Business Services</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">Social Marketing</a></li>
+                    <li class="footer-nav-item"><a class="footer-nav-link" href="#">View all</a></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6">
+                <p>Get in-context advice from our experts about your most pressing issues or areas of interest.</p>
+                <form class="rd-form rd-mailform rd-form-inline search" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="#" novalidate="novalidate">
+                <div class="form-wrap">
+                    <input class="form-input form-control-has-validation" placeholder="Enter your email" id="subscribe-form-email-footer" type="email" name="email" data-constraints="@Email @Required"><span class="form-validation"></span>
+                    <br>
+                   
+                </div>
+                <div class="form-button">
+                    <button class="button button-primary" type="submit">Submit now</button>
+                </div>
+                </form>
+                <br>
+
+                <div class="soc-list">
+                    <a href="#"><img class="img-size"  src="/static/images/facebook.svg"></a>
+                    <a href="#"><img class="img-size" src="/static/images/instagram.svg"></a>
+                    <a href="#"><img class="img-size" src="/static/images/linkedin.svg"></a>
+                    <a href="#"><img class="img-size" src="/static/images/facebook.svg"></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="rights"><span>©&nbsp;</span><span class="copyright-year">2020</span><span>&nbsp;</span><span>Demlia</span><span>.&nbsp;</span><span>All Rights Reserved&nbsp;|&nbsp;</span><a href="privacy-policy.html">Privacy Policy</a></p>
+        </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/counter.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    <!-- Vue Js Axios-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    {% block vue %}
+    
+    {% endblock vue %}
+</body>
+</html>
